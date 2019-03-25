@@ -8,7 +8,7 @@ import (
 
 	"github.com/coreos/etcd/clientv3"
 	corev1 "k8s.io/api/core/v1"
-		"strings"
+	"strings"
 	"time"
 )
 
@@ -25,13 +25,13 @@ const DefaultDialTimeout = 2 * time.Second
 
 func removeEtcdMemberByIP(pod *corev1.Pod) error {
 	/*
-		      *  如果出现 case1, 在 webhook 会重新 callback，但是显然，节点已经下线，所以应该返回dail 异常，这时候正常来讲应该返回正常的
-			  *  如果出现 case2,应该是下线失败。
+		*  如果出现 case1, 在 webhook 会重新 callback，但是显然，节点已经下线，所以应该返回dail 异常，这时候正常来讲应该返回正常的
+		*  如果出现 case2,应该是下线失败。
 
-			但是当前是没办法区分是case1 还是 case2,而且没有memberlist 的列表（状态 不再webhook 维护，所以这块为什么etcd-operator 需要维护cluste的信息），
-			也就没法通过通过其他节点让该member 下线
+		但是当前是没办法区分是case1 还是 case2,而且没有memberlist 的列表（状态 不再webhook 维护，所以这块为什么etcd-operator 需要维护cluste的信息），
+		也就没法通过通过其他节点让该member 下线
 
-			所以这块直接返回err，让运维的同学做接入
+		所以这块直接返回err，让运维的同学做接入
 	*/
 	clientURL := "http://" + pod.Status.PodIP + ":2379"
 	resp, err := listEtcdMembers([]string{clientURL}, nil)
@@ -39,8 +39,7 @@ func removeEtcdMemberByIP(pod *corev1.Pod) error {
 		return err
 	}
 	/*
-
-		这块没有的话也是直接返回err
+	  这块没有的话也是直接返回err
 	*/
 	id, err := getCurrentEtcdMemberId(resp, clientURL, pod.Name)
 	if err != nil {
@@ -67,9 +66,9 @@ func getCurrentEtcdMemberId(mlresp *clientv3.MemberListResponse, podIP string, p
 		if InStringArr(member.ClientURLs, podIP) {
 			return member.ID, nil
 		}
-        if InStringArr(member.ClientURLs, podName) {
-            return member.ID, nil
-        }
+		if InStringArr(member.ClientURLs, podName) {
+			return member.ID, nil
+		}
 	}
 	return 0, errors.New("not find")
 }
@@ -119,7 +118,7 @@ func removeEtcdMember(clientURLs []string, tc *tls.Config, id uint64) error {
 
 func InStringArr(arr []string, target string) bool {
 	for _, val := range arr {
-		if strings.Contains(val,target) {
+		if strings.Contains(val, target) {
 			return true
 		}
 	}
