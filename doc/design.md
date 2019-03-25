@@ -9,9 +9,7 @@
 
 
 > 利用 k8s admission validation webhook 机制实现 webhook 用以解决 etcd 集群安全下线问题。当将 statefulset 的 replicas 减小 1 时，能在 pod 删除前执行 remove member 操作，保证 3 节点的 etcd 集群在 replicas 减小到 1 时，仍能正常工作。
-
-[其中 etcd 集群部署可参考]
-(https://github.com/kubernetes/kubernetes/blob/master/test/e2e/testing-manifests/statefulset/etcd/statefulset.yaml)
+[其中 etcd 集群部署可参考](https://github.com/kubernetes/kubernetes/blob/master/test/e2e/testing-manifests/statefulset/etcd/statefulset.yaml)
 
 
 **注**
