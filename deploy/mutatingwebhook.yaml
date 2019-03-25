@@ -1,0 +1,22 @@
+apiVersion: admissionregistration.k8s.io/v1beta1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: etcd-webhook-webhook-cfg
+  labels:
+    app: etcd-webhook
+webhooks:
+  - name: etcd.web-hook.me
+    clientConfig:
+      service:
+        name: etcd-webhook-webhook-svc
+        namespace: default
+        path: "/remove"
+      caBundle: ${CA_BUNDLE}
+    rules:
+      - operations: [ "DELETE" ]
+        apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["pods"]
+    namespaceSelector:
+      matchLabels:
+        etcd-webhook: enabled

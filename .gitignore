@@ -1,0 +1,17 @@
+*.swp
+*.tmp
+.gd*
+tmp
+cscop*
+*.a
+bin/*
+pkg/*
+.DS_Store
+.tags
+.tags_sorted_by_file
+tags
+*.log
+*.prof
+*.log.*
+.idea
+vendor
