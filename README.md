@@ -1,4 +1,4 @@
-# Kubernetes Validating Admission Webhook Admission Webhook for etcd member remove
+# Kubernetes Validating Admission Webhook for etcd member remove
 
 
 ## Prerequisites
